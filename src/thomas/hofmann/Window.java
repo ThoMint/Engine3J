@@ -13,7 +13,7 @@ public class Window extends JFrame {
 		setSize(width, height);
 		setLocation(75, 75);
 		setFocusable(true);
-		setResizable(false);
+		setResizable(true);
 		requestFocus();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);

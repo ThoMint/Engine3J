@@ -2,6 +2,7 @@ package thomas.hofmann;
 
 public class Triangle {
 	public Vector3D[] vectors;
+	public double color=Math.random();
 
 	public Triangle() {
 		vectors = new Vector3D[3];

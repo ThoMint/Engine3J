@@ -7,20 +7,26 @@ public class Camera {
 	public double zNear = 0.0;
 	public double zFar = 0.0;
 
+	public Vector3D camV;
+	public Vector3D lightSource;
+
 	public double aspectRatio = 0.0;
 	public double zScale = 0.0;
 
-	public Camera(int width, int height, double foV, double zNear, double zFar) {
+	public Camera(double foV, double zNear, double zFar) {
 		super();
-		this.width = width;
-		this.height = height;
+		camV = new Vector3D(0.0, 0.0, 0.0);
+		lightSource = new Vector3D(0.0, 0.0, 1.0);
+		lightSource.normalizeV();
 		this.foV = foV;
 		this.zNear = zNear;
 		this.zFar = zFar;
-		init();
 	}
 
-	private void init() {
+	public void init(int width, int height) {
+		this.width = width;
+		this.height = height;
+		
 		foV = (Math.PI / 180.0) * foV;
 		foV = 1.0 / (Math.tan(foV / 2.0));
 		aspectRatio = ((double) width) / ((double) height);

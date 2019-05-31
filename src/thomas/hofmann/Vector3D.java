@@ -23,6 +23,17 @@ public class Vector3D {
 		xyz[2] = z;
 	}
 
+	public void normalizeV() {
+		double length = length();
+		xyz[0] = xyz[0] / length;
+		xyz[1] = xyz[1] / length;
+		xyz[2] = xyz[2] / length;
+	}
+
+	public double length() {
+		return Math.sqrt(xyz[0] * xyz[0] + xyz[1] * xyz[1] + xyz[2] * xyz[2]);
+	}
+
 	public double getX() {
 		return xyz[0];
 	}
