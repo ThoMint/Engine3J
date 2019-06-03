@@ -2,20 +2,41 @@ package thomas.hofmann;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class OBJLoader {
-
-	@SuppressWarnings("resource")
+	
+	@SuppressWarnings({ "unused", "resource" })
 	public static Mesh loadFile(String path, String spacing, boolean ccwFaces, boolean ccwVertex) throws FileNotFoundException {
-		File file = new File(path);
-		Scanner scanner = new Scanner(file);
+		ArrayList<Vector3D> vertexPool;
+		ArrayList<Triangle> trianglePool;
+		String line;
 		
-		ArrayList<Vector3D> vertexPool = new ArrayList<Vector3D>();
-		ArrayList<Triangle> trianglePool = new ArrayList<Triangle>();
-
-		String line = new String();
+		boolean useDefaultF;
+		InputStream defaultF;
+		File file;
+		Scanner scanner;
+		
+		file = new File(path);
+		defaultF = OBJLoader.class.getResourceAsStream("/thomas/hofmann/object.obj");
+		
+		vertexPool = new ArrayList<Vector3D>();
+		trianglePool = new ArrayList<Triangle>();
+		line = new String();
+		
+		if(file == null) {
+			useDefaultF = false;
+		}else {
+			useDefaultF = true;
+		}
+		
+		if(!useDefaultF) {
+			scanner = new Scanner(file);
+		} else {
+			scanner = new Scanner(defaultF);
+		}
 		
 		while (scanner.hasNextLine()) {
 			line = scanner.nextLine();
@@ -27,7 +48,14 @@ public class OBJLoader {
 		}
 		
 		scanner.close();
-		scanner = new Scanner(file);
+		if(!useDefaultF) {
+			file = new File(path);
+			scanner = new Scanner(file);
+		} else {
+			defaultF = OBJLoader.class.getResourceAsStream("/thomas/hofmann/object.obj");
+			scanner = new Scanner(defaultF);
+		}
+		
 		while (scanner.hasNextLine()) {
 			line = scanner.nextLine();
 			if(line.length()>0) {
@@ -51,6 +79,7 @@ public class OBJLoader {
 				j++;
 			}
 		}
+		
 		
 		ts.add( new Triangle(new double[][] {
 			{pool.get(nums[0]).xyz[0], pool.get(nums[0]).xyz[1], pool.get(nums[0]).xyz[2]},
